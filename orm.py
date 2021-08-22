@@ -1,8 +1,13 @@
+#Caso 1
+#Paula Mariana Bustos Vargas
+#Max Richard Lee Chung
+
 import sqlalchemy as sa
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import declarative_base
 
-#Coneccion con la base de datos
+#Coneccion con la base de datos ('mssql+pyodbc://server/databsae?driver=SQL+Server+Native+Client+11.0')
+#Echo sirve para visualizar las ejecuciones que realiza
 engine = sa.create_engine('mssql+pyodbc://(LocalDb)\MSSQLLocalDB/solutiondesigns?driver=SQL+Server+Native+Client+11.0', echo = False)
 con = engine.connect()
 
@@ -32,24 +37,22 @@ class action(Base):
 -----------------------------------------  Relacion 1 a N   -----------------------------------------
 - ------------------------------------------------------------------------------------------------- '''
 
-#Usable tables: solutionsLog, action
-#Creacion y declaracion variables tablas, 
-
-'''Se realizan para poder acceder a las clases instanciadas arriba 
-    Las cuales tienen la informacion de las tablas de sql
-    y se realizan por medio del metodo ___table___ de sqlalchemy
-'''
+#Tablas a usar: solutionsLog, action
+#Se declaran las varaibles tablas cuya utilidad es para poder acceder a las clases instanciadas
+#anteriormente, las cuales contienen el mapeo a la informacion de las tablas en sql y se utiliza
+#el metodo .___table___ de sqlalchemy para tenerlas como formato tablas y manipularlas
 solutions = solutionsLog.__table__
 actions = action.__table__
 
 # Query relacion 1 a N
+# Replica un select con inner join
 query = sa.select([solutions, actions])
 query = query.select_from(solutions.join(
                                         actions,
                                         solutions.columns.actiontypeid == actions.columns.actiontypeid))
 #Ejecucion del query
 res = con.execute(query)
-
+#Extrae toda la informacion de la tabla seleccionada 
 test = res.fetchall()
 
 #Representacion de las primeras 10 filas de la ejecucion del query
@@ -70,5 +73,5 @@ for i in test:
 
 
 ''' -------------------------------------------------------------------------------------------------
------------------------------------------  Object Pooling   -----------------------------------------
+-----------------------------------------  Transaccion   -----------------------------------------
 - ------------------------------------------------------------------------------------------------- '''
