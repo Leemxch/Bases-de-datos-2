@@ -70,8 +70,24 @@ for i in test:
 -----------------------------------------  Object Pooling   -----------------------------------------
 - ------------------------------------------------------------------------------------------------- '''
 
-
+engine = sa.create_engine('mssql+pyodbc://HP-PC/solutiondesigns?driver=SQL+Server+Native+Client+11.0', 
+                            echo = False,
+                            pool_size = 5, 
+                            max_overflow = 20, 
+                            pool_recycle = 4,
+                            pool_timeout = 120
+                        )
 
 ''' -------------------------------------------------------------------------------------------------
------------------------------------------  Transaccion   -----------------------------------------
+------------------------------  Transaccion que afecta a más de una tabla  --------------------------
 - ------------------------------------------------------------------------------------------------- '''
+
+#Creamos el apartado de transaccion virtual enlazada al engine
+Session = sessionmaker(bind=engine)
+
+nombre = 'pez18_prueba'
+
+ses = Session()
+ses.add(action(name = nombre ,iconurl = 'some url'))
+ses.add(solutionsLog(posttime = '2021-08-22', actiontypeid = ses.query(actions).where(actions.columns.name == nombre).first().actiontypeid, solutionid = 4))
+ses.commit()
