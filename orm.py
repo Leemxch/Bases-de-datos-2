@@ -1,6 +1,10 @@
-#Caso 1
-#Paula Mariana Bustos Vargas
-#Max Richard Lee Chung
+# Intituto Tecnologico de Costa Rica                            Bases de datos 2
+# 2018093728 - Paula Mariana Bustos Vargas
+# 2019185076 - Max Richard Lee Chung
+
+''' -------------------------------------------------------------------------------------------------
+                                         Caso 1
+----------------------------------------------------------------------------------------------------- '''
 
 import sqlalchemy as sa
 from sqlalchemy.orm import sessionmaker
