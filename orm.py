@@ -72,11 +72,26 @@ for i in test:
 
 engine = sa.create_engine('mssql+pyodbc://(LocalDb)\MSSQLLocalDB/solutiondesigns?driver=SQL+Server+Native+Client+11.0', 
                             echo = False,
-                            pool_size = 5, 
-                            max_overflow = 20, 
-                            pool_recycle = 4,
-                            pool_timeout = 120
+                          
+                            #El predeterminado es de 5 y comienza sin conecciones
+                            # mayor numero de conexiones que se mantendran.  
+                            pool_size = 2,
+
+                            # El valor predeterminado es 10. Cuando esta -1 significa que no tiene limite
+                            # Cuando la cantidad de conexiones sobrepasa la capacidad maxima del pool_size, se mantienen en espera, sin embargo, si la cantidad de conexiones sobrepasan el max_overflow, se desconectaran automaticamente
+                            max_overflow = 3, 
+                          
+                   ''' número total de conexiones simultáneas = pool_size + max_overflow '''
+
+                            # Es una funcion propia Pool. El valor predeterminado es -1. 
+                            # El numero de segundos entre el reciclaje de la conexión, lo que significa que al finalizar el "checkout", si se supera este tiempo de espera, la conexión se cerrará y se reemplazará por una conexión recién abierta
+                            pool_recycle = 150,
+
+                            # El valor predeterminado es 30.0. 
+                            # Es el número máximo de segundos de espera al recuperar un nueva conexión desde la piscina. Después de la cantidad de tiempo especificada, se lanzará una excepción.
+                            pool_timeout = 50
                         )
+
 
 ''' -------------------------------------------------------------------------------------------------
 ------------------------------  Transaccion que afecta a más de una tabla  --------------------------
