@@ -82,12 +82,18 @@ engine = sa.create_engine('mssql+pyodbc://HP-PC/solutiondesigns?driver=SQL+Serve
 ------------------------------  Transaccion que afecta a más de una tabla  --------------------------
 - ------------------------------------------------------------------------------------------------- '''
 
-#Creamos el apartado de transaccion virtual enlazada al engine
+#Creamos la sesion para la transaccion virtual enlazada al engine con la configuracion del object pooling
 Session = sessionmaker(bind=engine)
 
+#Variable para mapear la insercion de datos a las tablas, este caso se da por la columna nombre(name)
 nombre = 'pez18_prueba'
 
+#Declaramos la instancia de la sesion con la configuracion del engine 
 ses = Session()
+#Hacemos insert a la tabla action y luego insert a la tabla solutions mapeando por medio del nombre
 ses.add(action(name = nombre ,iconurl = 'some url'))
+#El actiontypeid se consigue por medio de un subquery, donde se obtienen las filas con la condicion de que tengan el mismo nombre,
+#luego se selecciona la primera fila y, como el resultado es una fila de una tabla, se saca el dato bajo el nombre de actiontypeid
 ses.add(solutionsLog(posttime = '2021-08-22', actiontypeid = ses.query(actions).where(actions.columns.name == nombre).first().actiontypeid, solutionid = 4))
+#Si no hubo error, se le hace commit y, si hay error, no se hace commit
 ses.commit()
