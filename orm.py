@@ -70,7 +70,7 @@ for i in test:
 -----------------------------------------  Object Pooling   -----------------------------------------
 - ------------------------------------------------------------------------------------------------- '''
 
-engine = sa.create_engine('mssql+pyodbc://HP-PC/solutiondesigns?driver=SQL+Server+Native+Client+11.0', 
+engine = sa.create_engine('mssql+pyodbc://(LocalDb)\MSSQLLocalDB/solutiondesigns?driver=SQL+Server+Native+Client+11.0', 
                             echo = False,
                             pool_size = 5, 
                             max_overflow = 20, 
