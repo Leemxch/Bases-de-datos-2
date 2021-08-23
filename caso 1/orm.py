@@ -114,7 +114,7 @@ try:
     ses.add(solutionsLog(posttime = '2021-08-22', actiontypeid = ses.query(actions).where(actions.columns.name == nombre).first().actiontypeid, solutionid = 4))
     #Si no hubo error, se le hace commit y, si hay error, no se hace commit
     ses.commit()
-except exc.SQLAlchemyError:
+except exc.SQLAlchemyError: #Detecta que el error sea de SQL
     #Hace rollback si encuentra un error a la hora de insertar una fila
     ses.rollback()
     
