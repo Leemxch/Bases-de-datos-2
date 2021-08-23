@@ -115,5 +115,6 @@ try:
     #Si no hubo error, se le hace commit y, si hay error, no se hace commit
     ses.commit()
 except exc.SQLAlchemyError:
+    #Hace rollback si encuentra un error a la hora de insertar una fila
     ses.rollback()
     
