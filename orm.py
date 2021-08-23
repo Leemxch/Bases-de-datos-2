@@ -15,10 +15,6 @@ from sqlalchemy.orm import declarative_base
 engine = sa.create_engine('mssql+pyodbc://(LocalDb)\MSSQLLocalDB/solutiondesigns?driver=SQL+Server+Native+Client+11.0', echo = False)
 con = engine.connect()
 
-'''Session = sessionmaker(bind=engine)
-session = Session()
-metadata = sa.MetaData()'''
-
 #Espacio de la base, molde para preparar la instancia de la base
 Base = declarative_base()
 
