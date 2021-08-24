@@ -47,10 +47,14 @@ actions = action.__table__
 
 # Query relacion 1 a N
 # Replica un select con inner join
-query = sa.select([solutions, actions])
+query = sa.select([actions.columns.name, solutions])
+#realiza la relacion entre las tablas
 query = query.select_from(solutions.join(
                                         actions,
                                         solutions.columns.actiontypeid == actions.columns.actiontypeid))
+#selecciona cual accion buscar
+query = query.where(actions.columns.name == 'like')
+
 #Ejecucion del query
 res = con.execute(query)
 #Extrae toda la informacion de la tabla seleccionada 
