@@ -121,4 +121,3 @@ try:
 except exc.SQLAlchemyError: #Detecta que el error sea de SQL
     #Hace rollback si encuentra un error a la hora de insertar una fila
     ses.rollback()
-    

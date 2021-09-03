@@ -1,0 +1,44 @@
+/**
+ * CASO #2
+ * Max Richard Lee Chung - 2019185076
+ */
+
+//Obtengo la imagen de Mongo que provee Docker
+docker pull mongo
+
+//Creo una imagen para trabajar dentro de Docker
+docker run --name caso2 -d mongo
+docker exec -it caso2 bash
+
+//Cambio al shell de Windows por el de MongoDB
+mongo
+
+//Cambio a la base deseada, en este caso, se usa "caso2"
+use caso2
+
+//Muestra todas las bases existentes
+show dbs
+
+//Muestra todas las tablas existentes en la base
+show table
+
+//Inserto las filas necesarias al query seleccionado, en este caso, a la tabla Newt
+db.Newt.save({id: 1, ubicacion: 'San Jose, San Pedro, UCR, en el parqueo de musica', estado: 'Buenas condiciones', distanciaRecorrida: [6.4,0.1], costo: 3456, rating: 3.1,bateria:50});
+db.Newt.save({id:2, ubicacion: 'Cartago, Cartago, ITCR, en la entrada principal', estado: 'No muy buenas condiciones', distanciaRecorrida: [10.2,5.1, 0.5, 12.4], costo: 2334, rating: 4.7,bateria:10});
+db.Newt.save({id:3, ubicacion: 'San Jose, San Pedro, ULATINA, en el pretil', estado: 'Excelente condiciones', distanciaRecorrida: [3.14], costo: 9256, rating: 2.1,bateria:90});
+
+//Query general
+//SELECT * FROM Newt
+db.Newt.find().pretty();
+
+//Query por rangos
+//SELECT Newt.bateria FROM Newt 
+//WHERE (Newt.bateria > 2)
+db.Newt.find({bateria:{ $gt: 60}}).pretty();
+
+//Query agregada
+//SELECT AVG(Newt.distanciaRecorrida) FROM Newt
+db.Newt.aggregate([{$project: {"average": {$avg: "$distanciaRecorrida"}}}])
+
+//Drop table (test)
+db.Newt.drop();

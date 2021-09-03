@@ -1,0 +1,46 @@
+/**
+ * CASO #2
+ * Max Richard Lee Chung - 2019185076
+ */
+
+//Obtengo la imagen de Mongo que provee Docker
+docker pull mongo
+
+//Creo una imagen para trabajar dentro de Docker
+docker run --name caso2 -d mongo
+docker exec -it caso2 bash
+
+//Cambio al shell de Windows por el de MongoDB
+mongo
+
+//Cambio a la base deseada, en este caso, se usa "caso2"
+use caso2
+
+//Muestra todas las bases existentes
+show dbs
+
+//Muestra todas las tablas existentes en la base
+show table
+
+//Inserto las filas necesarias al query seleccionado, en este caso, a la tabla PedidosYa
+db.PedidosYa.save({id:1, nombre:"hamburguesa", costo:[5000,3000], rating:4.1});
+db.PedidosYa.save({id:2, nombre:"pizza", costo:[10000,13212], rating:3.5});
+db.PedidosYa.save({id:3, nombre:"spaghetti", costo:[3000,7434], rating:1.2});
+db.PedidosYa.save({id:4, nombre:"hamburguesa deluxe", costo:[7000,12000], rating:4.4});
+db.PedidosYa.save({id:5, nombre:"sushi", costo:[9000,9000], rating:5.0});
+
+//Query general
+//SELECT * FROM PedidosYa
+db.PedidosYa.find().pretty();
+
+//Query por rangos
+//SELECT PedidosYa.costo FROM PedidosYa 
+//WHERE (PedidosYa.costo > 2)
+db.PedidosYa.find({costo:{ $gt: 7000}}).pretty();
+
+//Query agregada
+//SELECT SUM(PedidosYa.costo) FROM PedidosYa
+db.PedidosYa.aggregate([{$project: {"summation": {$sum: "$costo"}}}])
+
+//Drop table (test)
+db.PedidosYa.drop();
