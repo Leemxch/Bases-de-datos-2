@@ -1,0 +1,57 @@
+<div class="cards product-results"></div>
+
+<!-- Templates -->
+<script type="text/template" id="card-template">
+    <div class="card {{attributes}}">
+        <div class="photo">
+            <!-- URL de la imagen -->
+            <div class="img" style="background-image: url({{urlFoto}});"></div>
+            <div class="price">
+                Dueño: {{nombreDuennio}}
+            </div>
+                <div class="title">
+                <h3>
+                	Nombre del artículo: {{nombreArticulo}}<br>
+                </h3>
+            </div>
+        </div>
+        <div class="description animate">
+            <div class="adress">
+                <h3>
+                    Detalle: {{detalle}}<br>
+                    Año de antiguedad: {{annoAntiguedad}}<br>
+                    Precio inicial: {{precioInicial}} <br>
+                    Fecha Máxima: <br>{{fechaMaxima}}
+                </h3>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/template" id="hotel-description">
+    <div class="top">
+        {{#if diamondRating}}
+        <div class="rating">
+            <!-- <span class="diamonds diamond-rating-{{diamondRating}}"></span> -->
+            <span class="diamonds">{{diamondRating diamondRating 5}}</span>
+            <span class="trip-advisor"><img src="{{tripAdvisorUrl}}"/></span>
+        </div>
+        {{/if}}
+        <div class="address">
+            {{address}}
+            <!-- 
+            <div class="street">{{street}}</div>
+            <div class="city-state">
+                {{cityState}} {{zipcode}} {{country}}
+            </div> 
+            -->
+        </div>
+        <div class="phone">
+            <!-- <a href="tel:{{phone}}">{{phone}}</a> -->
+            {{phone}}
+        </div>
+    </div>
+    <div class="bottom">
+        Some random text
+    </div>
+</script>
