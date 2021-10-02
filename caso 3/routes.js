@@ -1,3 +1,9 @@
+/**
+ * Caso #3
+ * Mónica Alfaro Parrales - 2020132572 
+ * Max Richard Lee Chung - 2019185076
+*/
+
 const sales = require("./Sale_Design.js");
 const express = require('express');
 const router = express.Router();
